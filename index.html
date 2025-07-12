@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern CSS Border</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="box"></div>
+    <script>
+        const box = document.querySelector('div.box');
+        window.addEventListener('mousemove', (e) => {
+            const rect = box.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const dx = e.clientX - centerX;
+            const dy = e.clientY - centerY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            const minBlur = 20;
+            const maxBlur = 50;
+            const maxDistance = 400;
+            const blur = Math.min(maxBlur, Math.max(minBlur, minBlur + (maxBlur - minBlur) * (distance / maxDistance)));
+            const deg = Math.atan2(dy, dx) * (180 / Math.PI);
+            box.style.setProperty('--blur', `${blur}px`);
+            box.style.setProperty('--deg', deg + 90 <= 360 ? deg + 90 + 'deg' : deg - 270 + 'deg');
+        });
+    </script>
+</body>
+
+</html>
